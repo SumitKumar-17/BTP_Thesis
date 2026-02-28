@@ -1,0 +1,129 @@
+
+  Let me explain the CRITICAL difference that makes one work and the other fail:
+
+  ---
+  SCENARIO 1: CPU Victim + GPU Attacker ✅ WORKS (734x slowdown!)
+
+  The Architecture:
+
+  ┌────────────────────────────────────────────────────────┐
+  │                    CPU SIDE                             │
+  │                                                          │
+  │  ┌──────────────┐                                       │
+  │  │ CPU Thread   │ ← VICTIM (Process measuring timing)  │
+  │  │ (Victim)     │                                       │
+  │  └──────┬───────┘                                       │
+  │         │                                                │
+  │         │ 1. CPU reads memory                           │
+  │         ↓                                                │
+  │  ┌──────────────┐                                       │
+  │  │   CPU L1     │  Fast                                 │
+  │  │   Cache      │                                        │
+  │  └──────┬───────┘                                       │
+  │         │                                                │
+  │         ↓                                                │
+  │  ┌──────────────┐                                       │
+  │  │   CPU L2     │  Fast                                 │
+  │  │   Cache      │                                        │
+  │  └──────┬───────┘                                       │
+  │         │                                                │
+  │         │ 2. Data cached here!                          │
+  │         ↓                                                │
+  │  ┌──────────────┐                                       │
+  │  │   CPU LLC    │ ← ATTACK TARGET!                     │
+  │  │ (Last Level  │   Cache Set #100                      │
+  │  │   Cache)     │                                        │
+  │  └──────┬───────┘                                       │
+  │         │                                                │
+  │         │ 3. CPU measures timing HERE (rdtsc)           │
+  │         │    - Cache hit: 155 cycles (FAST!)            │
+  │         │    - Cache miss: 1,163,497 cycles (SLOW!)     │
+  │         │                                                │
+  └─────────┼────────────────────────────────────────────────┘
+            │
+            │ 4. Shared via UVM
+            │
+  ┌─────────▼────────────────────────────────────────────────┐
+  │                   MAIN MEMORY (DRAM)                      │
+  │   Physical Address: 0xAAAA000 → Cache Set #100           │
+  └─────────▲────────────────────────────────────────────────┘
+            │
+            │ 5. GPU accesses SAME physical address
+            │
+  ┌─────────┼────────────────────────────────────────────────┐
+  │         │                 GPU SIDE                        │
+  │         │                                                  │
+  │  ┌──────┴───────┐                                         │
+  │  │ GPU Kernel   │ ← ATTACKER                             │
+  │  │ (Attacker)   │                                         │
+  │  └──────┬───────┘                                         │
+  │         │                                                  │
+  │         │ 6. GPU accesses memory via UVM                  │
+  │         ↓                                                  │
+  │  ┌──────────────┐                                         │
+  │  │  GPU Memory  │                                         │
+  │  │  Controller  │                                         │
+  │  └──────┬───────┘                                         │
+  │         │                                                  │
+  │         │ 7. Request goes to CPU LLC!                     │
+  │         │                                                  │
+  └─────────┼──────────────────────────────────────────────────┘
+            │
+            │ 8. GPU EVICTS CPU's cached data
+            │    from Cache Set #100!
+            │
+            └──> Back to CPU LLC (causes eviction)
+
+  The Attack Flow (Timeline):
+
+  Time 0: CPU accesses address 0xAAAA000
+          └─> Cached in CPU LLC Set #100
+          └─> CPU measures: 155 cycles (CACHE HIT!)
+
+  Time 1: GPU accesses SAME address 0xAAAA000 via UVM
+          └─> GPU request goes to CPU LLC
+          └─> Evicts CPU's data from Set #100
+
+  Time 2: CPU accesses address 0xAAAA000 AGAIN
+          └─> NOT in cache anymore! (GPU evicted it)
+          └─> Must fetch from DRAM
+          └─> CPU measures: 1,163,497 cycles (CACHE MISS!)
+
+  ATTACK DETECTED! 734x slowdown!
+
+  Why It Works:
+
+  1. CPU measures at CPU cache level (rdtsc directly measures CPU cycles)
+  2. GPU accesses go THROUGH CPU cache (UVM forces this path)
+  3. Measurement point = Attack point ✅
+  4. CPU directly experiences the cache miss
+
+  Code That Works:
+
+  // CPU thread (victim)
+  start = rdtsc();                    // Start CPU timing
+  volatile int value = data[index];   // Access memory
+  end = rdtsc();                      // End CPU timing
+  latency = end - start;              // Latency in CPU cycles
+
+  // Result:
+  // Without GPU: 155 cycles (cache hit)
+  // With GPU:    1,163,497 cycles (cache miss - DETECTED!)
+
+  THE KEY DIFFERENCE (Visual Comparison):
+
+  Scenario 1: Measurement Covers Attack
+
+  Measurement Span:
+  [═══════════════════════════════════════════]
+   ↑                                           ↑
+  Start                                      End
+  (rdtsc)                               (rdtsc)
+
+          CPU Cache Miss Happens Here
+                      ↓
+  [CPU]──>[L1]──>[L2]──>[LLC]──>[DRAM]
+                         ↑
+                     ATTACK
+
+  ✅ CPU measures the ENTIRE path including cache miss!
