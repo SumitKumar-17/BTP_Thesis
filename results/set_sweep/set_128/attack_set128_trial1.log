@@ -1,0 +1,73 @@
+=== HYBRID CPU-GPU CACHE MEASUREMENT (WITH SET VALIDATION) ===
+
+Configuration:
+  Array Size: 16777216 elements (67.11 MB)
+  CPU Measurements: 1000
+  GPU Contention: ENABLED
+  Set Validation: ENABLED
+  LLC Geometry: 12288 KB, 16 ways (12288 sets)
+  Target Set Override: 128
+  GPU Iterations: 1000
+
+Initializing data on CPU...
+Data initialized and pinned to CPU memory.
+
+[Validation] Probe set index: 4096 (physical)
+[Validation] Target set index: 128 (override)
+[Validation] Congruent candidates found: 84
+[Validation] Candidates with physical mapping: 84
+[Validation] Candidates with virtual approximation: 0
+[Validation] vtop failures while scanning: 0
+
+[Validation] Mapping sample (9 entries):
+  Probe idx=133120, VA=0x7fffd0082000, PA=0x194e82000, Set=128 (physical)
+  Target[0] idx=133120, VA=0x7fffd0082000, PA=0x194e82000, Set=128 (physical)
+  Target[1] idx=329728, VA=0x7fffd0142000, PA=0x194f42000, Set=128 (physical)
+  Target[2] idx=657408, VA=0x7fffd0282000, PA=0x17f882000, Set=128 (physical)
+  Target[3] idx=854016, VA=0x7fffd0342000, PA=0x17f942000, Set=128 (physical)
+  Target[4] idx=1050624, VA=0x7fffd0402000, PA=0x17fa02000, Set=128 (physical)
+  Target[5] idx=1247232, VA=0x7fffd04c2000, PA=0x17fac2000, Set=128 (physical)
+  Target[6] idx=1443840, VA=0x7fffd0582000, PA=0x17fb82000, Set=128 (physical)
+  Target[7] idx=1574912, VA=0x7fffd0602000, PA=0x128402000, Set=128 (physical)
+
+[CPU Thread] Started. Waiting for signal...
+[Main] Launching TARGETED GPU kernel on 84 congruent indices...
+[Main] GPU kernel launched (running concurrently with CPU measurements).
+
+[CPU Thread] Starting measurements...
+[CPU Thread] Completed 1000 measurements.
+[Main] GPU kernel completed.
+
+=== CPU-Side Timing Analysis ===
+Mean Latency:   2293.25 CPU cycles
+Std Deviation:  42437.19 CPU cycles
+Min Latency:    106 CPU cycles
+Max Latency:    1203455 CPU cycles
+
+Results saved to: results/hybrid_cpu_timings_contention.csv
+
+First 20 CPU access latencies:
+Iteration | Latency (CPU cycles)
+----------+---------------------
+        0 |                1375
+        1 |                 220
+        2 |                 212
+        3 |              493926
+        4 |                 220
+        5 |                 224
+        6 |              282176
+        7 |                 212
+        8 |                 216
+        9 |                 220
+       10 |                 220
+       11 |                 224
+       12 |                 220
+       13 |                 222
+       14 |                 222
+       15 |                 217
+       16 |                 215
+       17 |                 218
+       18 |                 216
+       19 |                 601
+
+=== Measurement Complete ===

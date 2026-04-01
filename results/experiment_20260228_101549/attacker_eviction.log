@@ -1,0 +1,14 @@
+=== GPU-CPU Cache Contention: ATTACKER Process ===
+
+Configuration:
+  Attack Mode: 1 (Eviction Set)
+  LLC Size: 12288 KB
+  Cache Line Size: 64 bytes
+  Estimated Cache Sets: 12288
+  Number of Iterations: 5000
+
+Building eviction sets...
+Eviction sets built. Starting attack...
+Attack completed in 12383.362 ms
+
+=== ATTACKER Process Complete ===

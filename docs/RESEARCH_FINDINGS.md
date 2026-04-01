@@ -353,3 +353,34 @@ python3 analyze_results.py
 **Research conducted by:** Sumit K.
 **Affiliation:** IIT Kharagpur, CS47006
 **Supervision:** B.Tech Project (Hardware Security)
+
+---
+
+## Update: Exact Physical LLC Set Validation (February 28, 2026)
+
+A root-privileged validation run was completed to remove pagemap restrictions and verify exact cache-set congruence physically.
+
+### Validation Outcomes
+
+- Target set index resolved from physical addresses: **Set 0**
+- Congruent lines found: **88**
+- Congruent lines with physical mapping: **88/88**
+- Pagemap translation failures: **0**
+- GPU launched in targeted mode on congruent indices: **Yes**
+
+### Baseline vs Targeted Same-Set Attack
+
+- Baseline mean: **144.63 cycles**
+- Attack mean: **1196.13 cycles** (**8.27x** increase)
+- Baseline max: **1084 cycles**
+- Attack max: **452,548 cycles** (**417.48x** increase)
+- Eviction-signature events (>10x median): **4 / 1000 (0.40%)**
+
+### Conclusion of Update
+
+This run provides direct evidence that GPU and CPU accesses were mapped to the **exact same physical LLC set** and that this mapping produced measurable CPU timing contention.
+
+Detailed logs and artifacts are documented in:
+- `docs/EXACT_SET_DEMONSTRATION_2026-02-28.md`
+- `results/exact_set_baseline_root.log`
+- `results/exact_set_attack_root.log`

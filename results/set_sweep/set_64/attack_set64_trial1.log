@@ -1,0 +1,73 @@
+=== HYBRID CPU-GPU CACHE MEASUREMENT (WITH SET VALIDATION) ===
+
+Configuration:
+  Array Size: 16777216 elements (67.11 MB)
+  CPU Measurements: 1000
+  GPU Contention: ENABLED
+  Set Validation: ENABLED
+  LLC Geometry: 12288 KB, 16 ways (12288 sets)
+  Target Set Override: 64
+  GPU Iterations: 1000
+
+Initializing data on CPU...
+Data initialized and pinned to CPU memory.
+
+[Validation] Probe set index: 0 (physical)
+[Validation] Target set index: 64 (override)
+[Validation] Congruent candidates found: 86
+[Validation] Candidates with physical mapping: 86
+[Validation] Candidates with virtual approximation: 0
+[Validation] vtop failures while scanning: 0
+
+[Validation] Mapping sample (9 entries):
+  Probe idx=1024, VA=0x7fffd0001000, PA=0x14f401000, Set=64 (physical)
+  Target[0] idx=1024, VA=0x7fffd0001000, PA=0x14f401000, Set=64 (physical)
+  Target[1] idx=197632, VA=0x7fffd00c1000, PA=0x14f4c1000, Set=64 (physical)
+  Target[2] idx=394240, VA=0x7fffd0181000, PA=0x14f581000, Set=64 (physical)
+  Target[3] idx=590848, VA=0x7fffd0241000, PA=0x11ae41000, Set=64 (physical)
+  Target[4] idx=787456, VA=0x7fffd0301000, PA=0x11af01000, Set=64 (physical)
+  Target[5] idx=984064, VA=0x7fffd03c1000, PA=0x11afc1000, Set=64 (physical)
+  Target[6] idx=1115136, VA=0x7fffd0441000, PA=0x12da41000, Set=64 (physical)
+  Target[7] idx=1311744, VA=0x7fffd0501000, PA=0x12db01000, Set=64 (physical)
+
+[CPU Thread] Started. Waiting for signal...
+[Main] Launching TARGETED GPU kernel on 86 congruent indices...
+[Main] GPU kernel launched (running concurrently with CPU measurements).
+
+[CPU Thread] Starting measurements...
+[CPU Thread] Completed 1000 measurements.
+[Main] GPU kernel completed.
+
+=== CPU-Side Timing Analysis ===
+Mean Latency:   2570.25 CPU cycles
+Std Deviation:  43832.78 CPU cycles
+Min Latency:    106 CPU cycles
+Max Latency:    1161939 CPU cycles
+
+Results saved to: results/hybrid_cpu_timings_contention.csv
+
+First 20 CPU access latencies:
+Iteration | Latency (CPU cycles)
+----------+---------------------
+        0 |                1083
+        1 |                 257
+        2 |              564119
+        3 |              421426
+        4 |                 259
+        5 |                 257
+        6 |                 265
+        7 |                 262
+        8 |              286298
+        9 |             1161939
+       10 |                 155
+       11 |                 157
+       12 |                 148
+       13 |                 155
+       14 |                 148
+       15 |                 151
+       16 |                 148
+       17 |                 153
+       18 |                 153
+       19 |                 155
+
+=== Measurement Complete ===

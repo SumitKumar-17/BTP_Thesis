@@ -1,0 +1,50 @@
+=== HYBRID CPU-GPU CACHE MEASUREMENT (WITH SET VALIDATION) ===
+
+Configuration:
+  Array Size: 262144 elements (1.05 MB)
+  CPU Measurements: 1000
+  GPU Contention: DISABLED
+  Set Validation: ENABLED
+  LLC Geometry: 12288 KB, 16 ways
+
+Initializing data on CPU...
+Data initialized and pinned to CPU memory.
+
+[CPU Thread] Started. Waiting for signal...
+[Main] No GPU contention - measuring baseline.
+
+[CPU Thread] Starting measurements...
+[CPU Thread] Completed 1000 measurements.
+=== CPU-Side Timing Analysis ===
+Mean Latency:   197.89 CPU cycles
+Std Deviation:  132.24 CPU cycles
+Min Latency:    122 CPU cycles
+Max Latency:    1469 CPU cycles
+
+Results saved to: results/hybrid_cpu_timings_baseline.csv
+
+First 20 CPU access latencies:
+Iteration | Latency (CPU cycles)
+----------+---------------------
+        0 |                1469
+        1 |                 292
+        2 |                 527
+        3 |                 495
+        4 |                 794
+        5 |                 301
+        6 |                 487
+        7 |                 310
+        8 |                 313
+        9 |                 491
+       10 |                 499
+       11 |                 495
+       12 |                 503
+       13 |                 460
+       14 |                 495
+       15 |                 287
+       16 |                 365
+       17 |                 495
+       18 |                 550
+       19 |                 493
+
+=== Measurement Complete ===

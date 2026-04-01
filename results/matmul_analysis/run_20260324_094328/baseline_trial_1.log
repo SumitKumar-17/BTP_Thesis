@@ -1,0 +1,73 @@
+=== HYBRID CPU-GPU CACHE MEASUREMENT (WITH REAL WORKLOADS) ===
+
+Configuration:
+  Array Size: 16777216 elements (67.11 MB)
+  CPU Measurements: 1000
+  GPU Contention: DISABLED
+  Set Validation: ENABLED
+  LLC Geometry: 12288 KB, 16 ways (12288 sets)
+  Target Set Override: 0
+  GPU Iterations: 1000
+  CPU workload: 16x16 matrix multiply per probe iteration
+  GPU workload: 128x128 matrix multiply fused with contention
+
+Initializing data on CPU...
+Data initialized and pinned to CPU memory.
+
+[Validation] Probe set index: 8192 (physical)
+[Validation] Target set index: 0 (override)
+[Validation] Congruent candidates found: 85
+[Validation] Candidates with physical mapping: 85
+[Validation] Candidates with virtual approximation: 0
+[Validation] vtop failures while scanning: 0
+
+[Validation] Mapping sample (9 entries):
+  Probe idx=65536, VA=0x7fffd0040000, PA=0x37e840000, Set=0 (physical)
+  Target[0] idx=65536, VA=0x7fffd0040000, PA=0x37e840000, Set=0 (physical)
+  Target[1] idx=262144, VA=0x7fffd0100000, PA=0x37e900000, Set=0 (physical)
+  Target[2] idx=458752, VA=0x7fffd01c0000, PA=0x37e9c0000, Set=0 (physical)
+  Target[3] idx=589824, VA=0x7fffd0240000, PA=0x120840000, Set=0 (physical)
+  Target[4] idx=786432, VA=0x7fffd0300000, PA=0x120900000, Set=0 (physical)
+  Target[5] idx=983040, VA=0x7fffd03c0000, PA=0x1209c0000, Set=0 (physical)
+  Target[6] idx=1114112, VA=0x7fffd0440000, PA=0x126840000, Set=0 (physical)
+  Target[7] idx=1310720, VA=0x7fffd0500000, PA=0x126900000, Set=0 (physical)
+
+[CPU Thread] Started. Waiting for signal...
+[Main] No GPU contention - measuring baseline.
+
+[CPU Thread] Starting measurements...
+[CPU Thread] Completed 1000 measurements.
+=== CPU-Side Timing Analysis ===
+Mean Latency:   144.82 CPU cycles
+Std Deviation:  36.05 CPU cycles
+Min Latency:    119 CPU cycles
+Max Latency:    1185 CPU cycles
+CPU workload checksum: 40600000.00
+
+Results saved to: results/hybrid_cpu_timings_baseline.csv
+
+First 20 CPU access latencies:
+Iteration | Latency (CPU cycles)
+----------+---------------------
+        0 |                1185
+        1 |                 133
+        2 |                 134
+        3 |                 158
+        4 |                 121
+        5 |                 123
+        6 |                 129
+        7 |                 122
+        8 |                 122
+        9 |                 134
+       10 |                 119
+       11 |                 126
+       12 |                 122
+       13 |                 131
+       14 |                 128
+       15 |                 137
+       16 |                 130
+       17 |                 132
+       18 |                 136
+       19 |                 131
+
+=== Measurement Complete ===

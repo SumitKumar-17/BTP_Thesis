@@ -1,0 +1,7 @@
+timestamp=20260324_094328
+num_trials=5
+cache_kb=12288
+ways=16
+target_set=0
+gpu_iters=1000
+config=matmul_workload_cpu16x16_gpu128x128

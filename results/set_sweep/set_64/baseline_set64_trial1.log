@@ -1,0 +1,70 @@
+=== HYBRID CPU-GPU CACHE MEASUREMENT (WITH SET VALIDATION) ===
+
+Configuration:
+  Array Size: 16777216 elements (67.11 MB)
+  CPU Measurements: 1000
+  GPU Contention: DISABLED
+  Set Validation: ENABLED
+  LLC Geometry: 12288 KB, 16 ways (12288 sets)
+  Target Set Override: 64
+  GPU Iterations: 1000
+
+Initializing data on CPU...
+Data initialized and pinned to CPU memory.
+
+[Validation] Probe set index: 8192 (physical)
+[Validation] Target set index: 64 (override)
+[Validation] Congruent candidates found: 85
+[Validation] Candidates with physical mapping: 85
+[Validation] Candidates with virtual approximation: 0
+[Validation] vtop failures while scanning: 0
+
+[Validation] Mapping sample (9 entries):
+  Probe idx=66560, VA=0x7fffd0041000, PA=0x135841000, Set=64 (physical)
+  Target[0] idx=66560, VA=0x7fffd0041000, PA=0x135841000, Set=64 (physical)
+  Target[1] idx=263168, VA=0x7fffd0101000, PA=0x135901000, Set=64 (physical)
+  Target[2] idx=459776, VA=0x7fffd01c1000, PA=0x1359c1000, Set=64 (physical)
+  Target[3] idx=590848, VA=0x7fffd0241000, PA=0x12da41000, Set=64 (physical)
+  Target[4] idx=787456, VA=0x7fffd0301000, PA=0x12db01000, Set=64 (physical)
+  Target[5] idx=984064, VA=0x7fffd03c1000, PA=0x12dbc1000, Set=64 (physical)
+  Target[6] idx=1115136, VA=0x7fffd0441000, PA=0x11ae41000, Set=64 (physical)
+  Target[7] idx=1311744, VA=0x7fffd0501000, PA=0x11af01000, Set=64 (physical)
+
+[CPU Thread] Started. Waiting for signal...
+[Main] No GPU contention - measuring baseline.
+
+[CPU Thread] Starting measurements...
+[CPU Thread] Completed 1000 measurements.
+=== CPU-Side Timing Analysis ===
+Mean Latency:   136.00 CPU cycles
+Std Deviation:  32.51 CPU cycles
+Min Latency:    106 CPU cycles
+Max Latency:    1057 CPU cycles
+
+Results saved to: results/hybrid_cpu_timings_baseline.csv
+
+First 20 CPU access latencies:
+Iteration | Latency (CPU cycles)
+----------+---------------------
+        0 |                1057
+        1 |                 134
+        2 |                 130
+        3 |                 136
+        4 |                 160
+        5 |                 151
+        6 |                 129
+        7 |                 128
+        8 |                 137
+        9 |                 131
+       10 |                 157
+       11 |                 132
+       12 |                 130
+       13 |                 127
+       14 |                 125
+       15 |                 129
+       16 |                 154
+       17 |                 149
+       18 |                 124
+       19 |                 132
+
+=== Measurement Complete ===

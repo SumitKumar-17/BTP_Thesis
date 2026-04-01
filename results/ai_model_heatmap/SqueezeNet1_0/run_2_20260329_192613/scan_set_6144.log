@@ -1,0 +1,18 @@
+=== EVSET AI SCAN ===
+Model: /home/rtx3060/Desktop/sumit-GPU-Codes/gpu_cpu_work_1/models/squeezenet1_0.pt
+Set: 6144  Points: 64  Reps: 64  GPU_iters: 10000
+
+[Model] Loading /home/rtx3060/Desktop/sumit-GPU-Codes/gpu_cpu_work_1/models/squeezenet1_0.pt ...
+[Model] Loaded OK
+[Model] Warming up...
+[Model] Warmup done
+
+[Evict] Scanning for congruent lines (set 6144)...
+[Evict] Found 85 congruent lines, using 64
+
+[Measure] Baseline...
+[Attack] Launching model inference thread + eviction kernel...
+[Attack] Model ran 24 inference iters
+[Attack] Done
+
+Saved: results/ai_scan_squeezenet1_0_set6144.csv

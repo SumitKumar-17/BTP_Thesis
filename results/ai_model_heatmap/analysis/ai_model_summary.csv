@@ -1,0 +1,6 @@
+model,mean_p99_ratio,mean_max_ratio,baseline_p99_cycles
+EfficientNetLite0,1.569,78.5,22.0
+MiniTransformer,1.624,57.3,22.0
+MobileNetV2,1.171,150.4,37.0
+SqueezeNet1_0,1.401,65.8,22.0
+TinyYOLOv2,1.354,58.0,22.0

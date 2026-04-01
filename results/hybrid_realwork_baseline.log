@@ -1,0 +1,74 @@
+=== HYBRID CPU-GPU CACHE MEASUREMENT (WITH REAL WORKLOADS) ===
+
+Configuration:
+  Array Size: 16777216 elements (67.11 MB)
+  CPU Measurements: 1000
+  GPU Contention: DISABLED
+  Set Validation: ENABLED
+  LLC Geometry: 12288 KB, 16 ways (12288 sets)
+  Target Set Override: 0
+  GPU Iterations: 500
+  CPU workload: 16x16 matrix multiply per probe iteration
+  GPU workload: 128x128 matrix multiply fused with contention
+
+Initializing data on CPU...
+Data initialized and pinned to CPU memory.
+
+[Validation] Probe set index: 8192 (virtual approximation)
+[Validation] Target set index: 0 (override)
+[Validation] Congruent candidates found: 85
+[Validation] Candidates with physical mapping: 0
+[Validation] Candidates with virtual approximation: 85
+[Validation] vtop failures while scanning: 1048576
+[Validation] Warning: exact set congruence is not fully proven on this run (pagemap restricted).
+
+[Validation] Mapping sample (9 entries):
+  Probe idx=65536, VA=0x7fffd0040000, PA=<unavailable: PFN unavailable (kernel permission restriction)>, Set=0 (virtual approx)
+  Target[0] idx=65536, VA=0x7fffd0040000, PA=<unavailable>, Set=0 (virtual approx)
+  Target[1] idx=262144, VA=0x7fffd0100000, PA=<unavailable>, Set=0 (virtual approx)
+  Target[2] idx=458752, VA=0x7fffd01c0000, PA=<unavailable>, Set=0 (virtual approx)
+  Target[3] idx=655360, VA=0x7fffd0280000, PA=<unavailable>, Set=0 (virtual approx)
+  Target[4] idx=851968, VA=0x7fffd0340000, PA=<unavailable>, Set=0 (virtual approx)
+  Target[5] idx=1048576, VA=0x7fffd0400000, PA=<unavailable>, Set=0 (virtual approx)
+  Target[6] idx=1245184, VA=0x7fffd04c0000, PA=<unavailable>, Set=0 (virtual approx)
+  Target[7] idx=1441792, VA=0x7fffd0580000, PA=<unavailable>, Set=0 (virtual approx)
+
+[CPU Thread] Started. Waiting for signal...
+[Main] No GPU contention - measuring baseline.
+
+[CPU Thread] Starting measurements...
+[CPU Thread] Completed 1000 measurements.
+=== CPU-Side Timing Analysis ===
+Mean Latency:   140.42 CPU cycles
+Std Deviation:  30.72 CPU cycles
+Min Latency:    119 CPU cycles
+Max Latency:    1027 CPU cycles
+CPU workload checksum: 40600000.00
+
+Results saved to: results/hybrid_cpu_timings_baseline.csv
+
+First 20 CPU access latencies:
+Iteration | Latency (CPU cycles)
+----------+---------------------
+        0 |                1027
+        1 |                 126
+        2 |                 126
+        3 |                 122
+        4 |                 147
+        5 |                 147
+        6 |                 127
+        7 |                 155
+        8 |                 149
+        9 |                 153
+       10 |                 153
+       11 |                 148
+       12 |                 155
+       13 |                 155
+       14 |                 149
+       15 |                 153
+       16 |                 149
+       17 |                 155
+       18 |                 157
+       19 |                 154
+
+=== Measurement Complete ===

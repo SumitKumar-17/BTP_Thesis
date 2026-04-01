@@ -1,0 +1,2 @@
+model=SqueezeNet1_0
+file=squeezenet1_0.pt
