@@ -1,0 +1,6 @@
+model,p99_ratio_mean,p99_ratio_max,max_ratio_mean,median_ratio_mean
+TinyYOLOv2,1.009,2.48,1.1,1.0
+EfficientNetLite0,1.003,1.134,1.0,1.0
+MiniTransformer,1.003,2.446,1.0,1.0
+MobileNetV2,1.002,1.113,1.0,1.0
+SqueezeNet1_0,1.001,1.12,1.0,1.0

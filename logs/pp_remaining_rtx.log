@@ -1,0 +1,119 @@
+================================================
+  Prime+Probe — Remaining models (RTX 3060)
+================================================
+
+  MODEL: MiniTransformer
+  Run 1/3
+    set 0 done
+    set 768 done
+    set 1536 done
+    set 2304 done
+    set 3072 done
+    set 3840 done
+    set 4608 done
+    set 5376 done
+    set 6144 done
+    set 6912 done
+    set 7680 done
+    set 8448 done
+    set 9216 done
+    set 9984 done
+    set 10752 done
+    set 11520 done
+  Run 1 complete
+  Run 2/3
+    set 0 done
+    set 768 done
+    set 1536 done
+    set 2304 done
+    set 3072 done
+    set 3840 done
+    set 4608 done
+    set 5376 done
+    set 6144 done
+    set 6912 done
+    set 7680 done
+    set 8448 done
+    set 9216 done
+    set 9984 done
+    set 10752 done
+    set 11520 done
+  Run 2 complete
+  Run 3/3
+    set 0 done
+    set 768 done
+    set 1536 done
+    set 2304 done
+    set 3072 done
+    set 3840 done
+    set 4608 done
+    set 5376 done
+    set 6144 done
+    set 6912 done
+    set 7680 done
+    set 8448 done
+    set 9216 done
+    set 9984 done
+    set 10752 done
+    set 11520 done
+  Run 3 complete
+  MiniTransformer complete.
+
+  MODEL: TinyYOLOv2
+  Run 1/3
+    set 0 done
+    set 768 done
+    set 1536 done
+    set 2304 done
+    set 3072 done
+    set 3840 done
+    set 4608 done
+    set 5376 done
+    set 6144 done
+    set 6912 done
+    set 7680 done
+    set 8448 done
+    set 9216 done
+    set 9984 done
+    set 10752 done
+    set 11520 done
+  Run 1 complete
+  Run 2/3
+    set 0 done
+    set 768 done
+    set 1536 done
+    set 2304 done
+    set 3072 done
+    set 3840 done
+    set 4608 done
+    set 5376 done
+    set 6144 done
+    set 6912 done
+    set 7680 done
+    set 8448 done
+    set 9216 done
+    set 9984 done
+    set 10752 done
+    set 11520 done
+  Run 2 complete
+  Run 3/3
+    set 0 done
+    set 768 done
+    set 1536 done
+    set 2304 done
+    set 3072 done
+    set 3840 done
+    set 4608 done
+    set 5376 done
+    set 6144 done
+    set 6912 done
+    set 7680 done
+    set 8448 done
+    set 9216 done
+    set 9984 done
+    set 10752 done
+    set 11520 done
+  Run 3 complete
+  TinyYOLOv2 complete.
+
+All remaining models done. Results: /home/rtx3060/Desktop/sumit-GPU-Codes/gpu_cpu_work_1/results/prime_probe_heatmap

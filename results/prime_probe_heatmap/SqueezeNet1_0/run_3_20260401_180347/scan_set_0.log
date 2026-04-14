@@ -1,0 +1,13 @@
+=== PRIME+PROBE AI SCAN ===
+Model: /home/rtx3060/Desktop/sumit-GPU-Codes/gpu_cpu_work_1/models/squeezenet1_0.pt
+Set: 0  Points: 64  Reps: 64
+
+[Model] Loading /home/rtx3060/Desktop/sumit-GPU-Codes/gpu_cpu_work_1/models/squeezenet1_0.pt on CPU...
+[Model] Loaded OK (CPU mode)
+[Model] Warming up CPU inference...
+[Model] Warmup done
+
+[Prime] Scanning congruent lines for set 0...
+[Prime] Found 86 lines, using 64
+
+Saved: results/pp_ai_squeezenet1_0_set0.csv

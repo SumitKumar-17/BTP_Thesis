@@ -1,0 +1,13 @@
+=== PRIME+PROBE AI SCAN ===
+Model: /home/rtx3060/Desktop/sumit-GPU-Codes/gpu_cpu_work_1/models/tinyyolo_v2.pt
+Set: 9984  Points: 64  Reps: 64
+
+[Model] Loading /home/rtx3060/Desktop/sumit-GPU-Codes/gpu_cpu_work_1/models/tinyyolo_v2.pt on CPU...
+[Model] Loaded OK (CPU mode)
+[Model] Warming up CPU inference...
+[Model] Warmup done
+
+[Prime] Scanning congruent lines for set 9984...
+[Prime] Found 87 lines, using 64
+
+Saved: results/pp_ai_tinyyolo_v2_set9984.csv

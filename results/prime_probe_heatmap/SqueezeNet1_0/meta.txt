@@ -1,0 +1,1 @@
+model=SqueezeNet1_0
