@@ -1,0 +1,2 @@
+model=TinyYOLOv2
+file=tinyyolo_v2.pt

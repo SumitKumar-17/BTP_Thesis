@@ -1,0 +1,77 @@
+=== HYBRID CPU-GPU CACHE MEASUREMENT (WITH REAL WORKLOADS) ===
+
+Configuration:
+  Array Size: 16777216 elements (67.11 MB)
+  CPU Measurements: 1000
+  GPU Contention: ENABLED
+  Set Validation: ENABLED
+  LLC Geometry: 12288 KB, 16 ways (12288 sets)
+  Target Set Override: 0
+  GPU Iterations: 500
+  CPU workload: 16x16 matrix multiply per probe iteration
+  GPU workload: 128x128 matrix multiply fused with contention
+
+Initializing data on CPU...
+Data initialized and pinned to CPU memory.
+
+[Validation] Probe set index: 8192 (virtual approximation)
+[Validation] Target set index: 0 (override)
+[Validation] Congruent candidates found: 85
+[Validation] Candidates with physical mapping: 0
+[Validation] Candidates with virtual approximation: 85
+[Validation] vtop failures while scanning: 1048576
+[Validation] Warning: exact set congruence is not fully proven on this run (pagemap restricted).
+
+[Validation] Mapping sample (9 entries):
+  Probe idx=65536, VA=0x7fffd0040000, PA=<unavailable: PFN unavailable (kernel permission restriction)>, Set=0 (virtual approx)
+  Target[0] idx=65536, VA=0x7fffd0040000, PA=<unavailable>, Set=0 (virtual approx)
+  Target[1] idx=262144, VA=0x7fffd0100000, PA=<unavailable>, Set=0 (virtual approx)
+  Target[2] idx=458752, VA=0x7fffd01c0000, PA=<unavailable>, Set=0 (virtual approx)
+  Target[3] idx=655360, VA=0x7fffd0280000, PA=<unavailable>, Set=0 (virtual approx)
+  Target[4] idx=851968, VA=0x7fffd0340000, PA=<unavailable>, Set=0 (virtual approx)
+  Target[5] idx=1048576, VA=0x7fffd0400000, PA=<unavailable>, Set=0 (virtual approx)
+  Target[6] idx=1245184, VA=0x7fffd04c0000, PA=<unavailable>, Set=0 (virtual approx)
+  Target[7] idx=1441792, VA=0x7fffd0580000, PA=<unavailable>, Set=0 (virtual approx)
+
+[CPU Thread] Started. Waiting for signal...
+[Main] Launching TARGETED GPU kernel on 85 congruent indices...
+[Main] GPU kernel launched (running concurrently with CPU measurements).
+
+[CPU Thread] Starting measurements...
+[CPU Thread] Completed 1000 measurements.
+[Main] GPU kernel completed.
+
+=== CPU-Side Timing Analysis ===
+Mean Latency:   9073.94 CPU cycles
+Std Deviation:  97114.12 CPU cycles
+Min Latency:    59 CPU cycles
+Max Latency:    1638796 CPU cycles
+CPU workload checksum: 40600000.00
+
+Results saved to: results/hybrid_cpu_timings_contention.csv
+
+First 20 CPU access latencies:
+Iteration | Latency (CPU cycles)
+----------+---------------------
+        0 |                1082
+        1 |                 305
+        2 |                 263
+        3 |                 308
+        4 |              620180
+        5 |                 310
+        6 |              546646
+        7 |                 122
+        8 |                 124
+        9 |                 149
+       10 |                 153
+       11 |                 126
+       12 |                 122
+       13 |                 125
+       14 |              237690
+       15 |             1354948
+       16 |              133245
+       17 |               51560
+       18 |                  90
+       19 |                  86
+
+=== Measurement Complete ===

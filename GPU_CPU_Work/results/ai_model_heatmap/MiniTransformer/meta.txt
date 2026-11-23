@@ -1,0 +1,2 @@
+model=MiniTransformer
+file=minitransformer.pt

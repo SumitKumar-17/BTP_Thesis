@@ -1,0 +1,62 @@
+================================================================================
+GPU-CPU CACHE CONTENTION ATTACK: ANALYSIS
+================================================================================
+
+Loading data...
+
+=== BASELINE Statistics ===
+Count:      1000
+Mean:       104.08 cycles
+Median:     75.00 cycles
+Std Dev:    100.76 cycles
+Min:        67 cycles
+Max:        1073 cycles
+25th %ile:  73.00 cycles
+75th %ile:  79.00 cycles
+95th %ile:  397.00 cycles
+99th %ile:  511.04 cycles
+
+=== GPU CONTENTION ATTACK Statistics ===
+Count:      1000
+Mean:       3539.78 cycles
+Median:     75.00 cycles
+Std Dev:    44796.43 cycles
+Min:        67 cycles
+Max:        1138028 cycles
+25th %ile:  73.00 cycles
+75th %ile:  80.00 cycles
+95th %ile:  440.10 cycles
+99th %ile:  50395.81 cycles
+
+=== Attack Signature Analysis ===
+Median latency: 75.00 cycles
+Attack threshold (>10x median): 750.00 cycles
+Number of suspected cache evictions: 29
+Percentage of accesses affected: 2.90%
+
+Top 10 highest latency events (likely cache evictions):
+     iteration  latency_cpu_cycles
+11          11             1138028
+5            5              697013
+3            3              392071
+8            8              151433
+512        512              117237
+256        256               81550
+32          32               61706
+12          12               54864
+17          17               53835
+18          18               51169
+
+================================================================================
+Generating visualizations...
+================================================================================
+
+Timeline plot saved to: results/plots/timeline.png
+Histogram plot saved to: results/plots/histogram.png
+Box plot saved to: results/plots/boxplot.png
+
+Report saved to: results/analysis_report.txt
+
+================================================================================
+Analysis complete!
+================================================================================

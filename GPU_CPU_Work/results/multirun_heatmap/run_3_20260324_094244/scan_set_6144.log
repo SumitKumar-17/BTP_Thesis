@@ -1,0 +1,8 @@
+=== EVICTION SET ADDRESS SCAN ===
+Target set: 6144
+Points: 64
+Samples per address: 64
+GPU iterations: 20000
+
+Congruent indices found: 89, using first 64
+Saved: results/evset_address_scan_set6144.csv

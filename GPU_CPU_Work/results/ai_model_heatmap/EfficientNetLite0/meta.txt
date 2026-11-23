@@ -1,0 +1,2 @@
+model=EfficientNetLite0
+file=efficientnet_lite0.pt

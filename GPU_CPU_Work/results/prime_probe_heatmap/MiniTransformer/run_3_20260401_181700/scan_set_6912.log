@@ -1,0 +1,13 @@
+=== PRIME+PROBE AI SCAN ===
+Model: /home/rtx3060/Desktop/sumit-GPU-Codes/gpu_cpu_work_1/models/minitransformer_cpu.pt
+Set: 6912  Points: 64  Reps: 64
+
+[Model] Loading /home/rtx3060/Desktop/sumit-GPU-Codes/gpu_cpu_work_1/models/minitransformer_cpu.pt on CPU...
+[Model] Loaded OK (CPU mode)
+[Model] Warming up CPU inference...
+[Model] Warmup done
+
+[Prime] Scanning congruent lines for set 6912...
+[Prime] Found 89 lines, using 64
+
+Saved: results/pp_ai_minitransformer_cpu_set6912.csv

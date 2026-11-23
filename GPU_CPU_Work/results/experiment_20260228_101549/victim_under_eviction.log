@@ -1,0 +1,49 @@
+=== GPU-CPU Cache Contention: VICTIM Process ===
+
+Configuration:
+  Array Size: 262144 elements (1.05 MB)
+  Access Stride: 16 elements
+  Number of Accesses: 1000
+
+Allocating unified memory...
+Initializing data on CPU...
+Data initialized and prefetched to CPU memory.
+
+Running victim kernel...
+Kernel execution time: 4.812 ms
+
+Analyzing timing data...
+
+=== Timing Statistics (GPU clock cycles) ===
+Mean Latency:   35.25 cycles
+Std Deviation:  3.19 cycles
+Min Latency:    31 cycles
+Max Latency:    40 cycles
+
+Results saved to: results/victim_timings_1000.csv
+
+First 20 access latencies:
+Iteration | Latency (cycles)
+----------+-----------------
+        0 |              40
+        1 |              35
+        2 |              35
+        3 |              31
+        4 |              40
+        5 |              35
+        6 |              35
+        7 |              31
+        8 |              40
+        9 |              35
+       10 |              35
+       11 |              31
+       12 |              40
+       13 |              35
+       14 |              35
+       15 |              31
+       16 |              40
+       17 |              35
+       18 |              35
+       19 |              31
+
+=== VICTIM Process Complete ===

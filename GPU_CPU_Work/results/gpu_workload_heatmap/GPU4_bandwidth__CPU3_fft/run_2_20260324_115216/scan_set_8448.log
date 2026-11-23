@@ -1,0 +1,6 @@
+=== EVSET WORKLOAD SCAN ===
+Set=8448  Points=64  Reps=64  GPUiters=5000
+GPU workload: bandwidth  CPU workload: fft_like
+
+Congruent found: 85, using 64
+Saved: results/workload_scan_set8448_gpu4_cpu3.csv

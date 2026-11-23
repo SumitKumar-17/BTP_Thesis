@@ -1,0 +1,6 @@
+=== EVSET WORKLOAD SCAN ===
+Set=9216  Points=64  Reps=64  GPUiters=5000
+GPU workload: matmul_512  CPU workload: matmul_256
+
+Congruent found: 85, using 64
+Saved: results/workload_scan_set9216_gpu2_cpu2.csv

@@ -1,0 +1,34 @@
+=== GPU-CPU CACHE CONTENTION ATTACK EXPERIMENT ===
+
+This experiment runs the victim and attacker processes concurrently
+to demonstrate cache eviction attacks from GPU on CPU LLC.
+
+Experiment directory: results/experiment_20260228_101549
+
+=== Experiment 1: Memory Thrashing Attack ===
+Starting attacker (mode 2: thrashing)...
+Starting victim...
+Experiment 1 complete.
+
+=== Experiment 2: Eviction Set Attack ===
+Starting attacker (mode 1: eviction sets)...
+Starting victim...
+Experiment 2 complete.
+
+=== Extracting Results ===
+Baseline (victim alone):
+Mean Latency:   35.25 cycles
+
+Under Thrashing Attack:
+Mean Latency:   35.25 cycles
+
+Under Eviction Attack:
+Mean Latency:   35.25 cycles
+
+=== Experiment Complete ===
+Results saved to: results/experiment_20260228_101549
+
+To analyze further, examine:
+  - results/experiment_20260228_101549/victim_under_thrashing.log
+  - results/experiment_20260228_101549/victim_under_eviction.log
+  - results/victim_timings_*.csv

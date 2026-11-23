@@ -1,0 +1,61 @@
+=== HYBRID CPU-GPU CACHE MEASUREMENT (WITH SET VALIDATION) ===
+
+Configuration:
+  Array Size: 262144 elements (1.05 MB)
+  CPU Measurements: 1000
+  GPU Contention: ENABLED
+  Set Validation: ENABLED
+  LLC Geometry: 12288 KB, 16 ways
+
+Initializing data on CPU...
+Data initialized and pinned to CPU memory.
+
+[Validation] Target set index: 4096 (virtual approximation)
+[Validation] Congruent candidates found: 2
+[Validation] Candidates with physical mapping: 0
+[Validation] Candidates with virtual approximation: 2
+[Validation] vtop failures while scanning: 16384
+[Validation] Warning: exact set congruence is not fully proven on this run (pagemap restricted).
+[Validation] Not enough congruent lines for targeted eviction. Falling back to broad contention.
+
+[CPU Thread] Started. Waiting for signal...
+[Main] Launching BROAD GPU contention kernel...
+[Main] GPU kernel launched (running concurrently with CPU measurements).
+
+[CPU Thread] Starting measurements...
+[CPU Thread] Completed 1000 measurements.
+[Main] GPU kernel completed.
+
+=== CPU-Side Timing Analysis ===
+Mean Latency:   4878.23 CPU cycles
+Std Deviation:  48322.72 CPU cycles
+Min Latency:    122 CPU cycles
+Max Latency:    1272182 CPU cycles
+
+Results saved to: results/hybrid_cpu_timings_contention.csv
+
+First 20 CPU access latencies:
+Iteration | Latency (CPU cycles)
+----------+---------------------
+        0 |                1027
+        1 |              567392
+        2 |              331937
+        3 |                 624
+        4 |                 617
+        5 |                 851
+        6 |                 626
+        7 |              241619
+        8 |             1272182
+        9 |              182064
+       10 |              150233
+       11 |                 511
+       12 |                 512
+       13 |                 513
+       14 |              111002
+       15 |              111894
+       16 |              113145
+       17 |              112298
+       18 |                 670
+       19 |                 520
+
+=== Measurement Complete ===

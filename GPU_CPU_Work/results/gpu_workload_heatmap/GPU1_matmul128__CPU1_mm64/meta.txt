@@ -1,0 +1,5 @@
+label=GPU1_matmul128__CPU1_mm64
+gpu_workload=1
+cpu_workload=1
+sets=0 768 1536 2304 3072 3840 4608 5376 6144 6912 7680 8448 9216 9984 10752 11520
+points=64 reps=64 gpu_iters=5000

@@ -1,0 +1,13 @@
+=== PRIME+PROBE AI SCAN ===
+Model: /home/rtx3060/Desktop/sumit-GPU-Codes/gpu_cpu_work_1/models/efficientnet_lite0.pt
+Set: 4608  Points: 64  Reps: 64
+
+[Model] Loading /home/rtx3060/Desktop/sumit-GPU-Codes/gpu_cpu_work_1/models/efficientnet_lite0.pt on CPU...
+[Model] Loaded OK (CPU mode)
+[Model] Warming up CPU inference...
+[Model] Warmup done
+
+[Prime] Scanning congruent lines for set 4608...
+[Prime] Found 82 lines, using 64
+
+Saved: results/pp_ai_efficientnet_lite0_set4608.csv

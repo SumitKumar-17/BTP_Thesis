@@ -1,0 +1,6 @@
+level,median_cycles,type
+CPU L1,2,cpu
+CPU L2,6,cpu
+CPU LLC,28,cpu
+CPU DRAM,190,cpu
+Pagemap,605,pagemap

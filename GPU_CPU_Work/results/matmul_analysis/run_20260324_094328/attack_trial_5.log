@@ -1,0 +1,76 @@
+=== HYBRID CPU-GPU CACHE MEASUREMENT (WITH REAL WORKLOADS) ===
+
+Configuration:
+  Array Size: 16777216 elements (67.11 MB)
+  CPU Measurements: 1000
+  GPU Contention: ENABLED
+  Set Validation: ENABLED
+  LLC Geometry: 12288 KB, 16 ways (12288 sets)
+  Target Set Override: 0
+  GPU Iterations: 1000
+  CPU workload: 16x16 matrix multiply per probe iteration
+  GPU workload: 128x128 matrix multiply fused with contention
+
+Initializing data on CPU...
+Data initialized and pinned to CPU memory.
+
+[Validation] Probe set index: 4096 (physical)
+[Validation] Target set index: 0 (override)
+[Validation] Congruent candidates found: 84
+[Validation] Candidates with physical mapping: 84
+[Validation] Candidates with virtual approximation: 0
+[Validation] vtop failures while scanning: 0
+
+[Validation] Mapping sample (9 entries):
+  Probe idx=131072, VA=0x7fffd0080000, PA=0x11a480000, Set=0 (physical)
+  Target[0] idx=131072, VA=0x7fffd0080000, PA=0x11a480000, Set=0 (physical)
+  Target[1] idx=327680, VA=0x7fffd0140000, PA=0x11a540000, Set=0 (physical)
+  Target[2] idx=655360, VA=0x7fffd0280000, PA=0x121080000, Set=0 (physical)
+  Target[3] idx=851968, VA=0x7fffd0340000, PA=0x121140000, Set=0 (physical)
+  Target[4] idx=1048576, VA=0x7fffd0400000, PA=0x625200000, Set=0 (physical)
+  Target[5] idx=1245184, VA=0x7fffd04c0000, PA=0x6252c0000, Set=0 (physical)
+  Target[6] idx=1441792, VA=0x7fffd0580000, PA=0x625380000, Set=0 (physical)
+  Target[7] idx=1638400, VA=0x7fffd0640000, PA=0x135840000, Set=0 (physical)
+
+[CPU Thread] Started. Waiting for signal...
+[Main] Launching TARGETED GPU kernel on 84 congruent indices...
+[Main] GPU kernel launched (running concurrently with CPU measurements).
+
+[CPU Thread] Starting measurements...
+[CPU Thread] Completed 1000 measurements.
+[Main] GPU kernel completed.
+
+=== CPU-Side Timing Analysis ===
+Mean Latency:   7464.65 CPU cycles
+Std Deviation:  89265.61 CPU cycles
+Min Latency:    59 CPU cycles
+Max Latency:    1635955 CPU cycles
+CPU workload checksum: 40600000.00
+
+Results saved to: results/hybrid_cpu_timings_contention.csv
+
+First 20 CPU access latencies:
+Iteration | Latency (CPU cycles)
+----------+---------------------
+        0 |              448283
+        1 |                 129
+        2 |              139117
+        3 |                 145
+        4 |                 126
+        5 |                 130
+        6 |                 120
+        7 |                 127
+        8 |                 126
+        9 |                 126
+       10 |              138875
+       11 |             1407022
+       12 |               50777
+       13 |               48431
+       14 |                  67
+       15 |                  67
+       16 |                  66
+       17 |                  63
+       18 |               48469
+       19 |               60531
+
+=== Measurement Complete ===

@@ -1,0 +1,226 @@
+#ifndef TIMING_UTILS_H
+#define TIMING_UTILS_H
+
+#include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <math.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <string.h>
+#include <cuda_runtime.h>
+
+// ============================================================================
+// CPU Timing using RDTSC (Read Time-Stamp Counter)
+// ============================================================================
+
+// Read the CPU timestamp counter (high-resolution timing)
+static inline uint64_t rdtsc() {
+    uint32_t lo, hi;
+    __asm__ __volatile__ (
+        "rdtscp"
+        : "=a"(lo), "=d"(hi)
+        :: "%rcx"
+    );
+    return ((uint64_t)hi << 32) | lo;
+}
+
+// Serialize execution before timing measurement
+static inline void cpu_barrier() {
+    __asm__ __volatile__ (
+        "mfence\n\t"
+        "lfence\n\t"
+        ::: "memory"
+    );
+}
+
+// Place this BETWEEN the measured load and the second rdtsc().
+// Without it the CPU can speculatively issue rdtsc before the load retires,
+// underestimating cache-miss latency. Fix: cpu_barrier(); start=rdtsc();
+//   load; load_barrier(); end=rdtsc(); cpu_barrier();
+static inline void load_barrier() {
+    __asm__ __volatile__ ("lfence" ::: "memory");
+}
+
+// ============================================================================
+// GPU Timing using CUDA Events
+// ============================================================================
+
+class CUDATimer {
+private:
+    cudaEvent_t start, stop;
+
+public:
+    CUDATimer() {
+        cudaEventCreate(&start);
+        cudaEventCreate(&stop);
+    }
+
+    ~CUDATimer() {
+        cudaEventDestroy(start);
+        cudaEventDestroy(stop);
+    }
+
+    void Start() {
+        cudaEventRecord(start);
+    }
+
+    void Stop() {
+        cudaEventRecord(stop);
+        cudaEventSynchronize(stop);
+    }
+
+    float ElapsedMilliseconds() {
+        float elapsed;
+        cudaEventElapsedTime(&elapsed, start, stop);
+        return elapsed;
+    }
+};
+
+// ============================================================================
+// GPU Device-Side Timing using clock64()
+// ============================================================================
+
+__device__ inline uint64_t gpu_clock() {
+    return clock64();
+}
+
+// ============================================================================
+// CUDA Error Checking Macro
+// ============================================================================
+
+#define CUDA_CHECK(call) \
+    do { \
+        cudaError_t err = call; \
+        if (err != cudaSuccess) { \
+            fprintf(stderr, "CUDA Error at %s:%d - %s\n", \
+                    __FILE__, __LINE__, cudaGetErrorString(err)); \
+            exit(EXIT_FAILURE); \
+        } \
+    } while(0)
+
+// ============================================================================
+// Statistics Utilities
+// ============================================================================
+
+// Calculate mean of an array
+inline double calculate_mean(const uint64_t* data, int n) {
+    double sum = 0.0;
+    for (int i = 0; i < n; i++) {
+        sum += data[i];
+    }
+    return sum / n;
+}
+
+// Calculate standard deviation
+inline double calculate_stddev(const uint64_t* data, int n, double mean) {
+    double sum_sq = 0.0;
+    for (int i = 0; i < n; i++) {
+        double diff = data[i] - mean;
+        sum_sq += diff * diff;
+    }
+    return sqrt(sum_sq / n);
+}
+
+// Find minimum value
+inline uint64_t find_min(const uint64_t* data, int n) {
+    uint64_t min_val = data[0];
+    for (int i = 1; i < n; i++) {
+        if (data[i] < min_val) {
+            min_val = data[i];
+        }
+    }
+    return min_val;
+}
+
+// Find maximum value
+inline uint64_t find_max(const uint64_t* data, int n) {
+    uint64_t max_val = data[0];
+    for (int i = 1; i < n; i++) {
+        if (data[i] > max_val) {
+            max_val = data[i];
+        }
+    }
+    return max_val;
+}
+
+// ============================================================================
+// Cache Set Index Helpers
+// ============================================================================
+
+inline uint64_t get_cache_set_index_from_phys(uint64_t phys_addr, int cache_size_kb, int ways) {
+    const int line_size = 64;
+    int total_sets = (cache_size_kb * 1024) / (line_size * ways);
+    return (phys_addr / line_size) % total_sets;
+}
+
+// Approximation only: this uses virtual address bits and is not guaranteed.
+inline uint64_t get_cache_set_index(void* addr, int cache_size_kb, int ways) {
+    return get_cache_set_index_from_phys((uint64_t)addr, cache_size_kb, ways);
+}
+
+// ============================================================================
+// Virtual-to-Physical Translation (Linux /proc/self/pagemap)
+// Returns 0 on success.
+// Error codes:
+//  -1: could not open pagemap
+//  -2: could not read pagemap entry
+//  -3: page not present
+//  -4: PFN unavailable (likely permission restricted by kernel)
+// ============================================================================
+
+inline int virtual_to_physical(void* vaddr, uint64_t* paddr_out) {
+    const uint64_t PAGE_PRESENT = 1ULL << 63;
+    const uint64_t PFN_MASK = ((1ULL << 55) - 1);
+
+    long page_size = sysconf(_SC_PAGESIZE);
+    if (page_size <= 0) {
+        return -2;
+    }
+
+    uint64_t virt = (uint64_t)vaddr;
+    uint64_t vpn = virt / (uint64_t)page_size;
+    uint64_t page_offset = virt % (uint64_t)page_size;
+
+    int fd = open("/proc/self/pagemap", O_RDONLY);
+    if (fd < 0) {
+        return -1;
+    }
+
+    uint64_t entry = 0;
+    off_t file_offset = (off_t)(vpn * sizeof(uint64_t));
+    ssize_t bytes = pread(fd, &entry, sizeof(entry), file_offset);
+    int saved_errno = errno;
+    close(fd);
+
+    if (bytes != (ssize_t)sizeof(entry)) {
+        errno = saved_errno;
+        return -2;
+    }
+
+    if ((entry & PAGE_PRESENT) == 0) {
+        return -3;
+    }
+
+    uint64_t pfn = entry & PFN_MASK;
+    if (pfn == 0) {
+        return -4;
+    }
+
+    *paddr_out = (pfn * (uint64_t)page_size) + page_offset;
+    return 0;
+}
+
+inline const char* vtop_error_string(int code) {
+    switch (code) {
+        case 0: return "success";
+        case -1: return "cannot open /proc/self/pagemap";
+        case -2: return "cannot read pagemap entry";
+        case -3: return "page not present";
+        case -4: return "PFN unavailable (kernel permission restriction)";
+        default: return "unknown error";
+    }
+}
+
+#endif // TIMING_UTILS_H
